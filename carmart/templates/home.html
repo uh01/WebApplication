@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% load static %}
+
+{% block content %}
+    <div style="display: flex; align-items: center; justify-content: space-around; margin-left:120px; width:90%; gap:20px;">
+        <div class="col-5" style="margin-right:50px;">
+            <h7 class="H1" style="font-size: 30px;">Welcome to</h7>
+            <h1 class="H2" style="font-size: 90px; color: #6D6D6D; text-shadow: 2px 2px 4px rgba(0.5, 0.5, 0.5, 2);">CarMart</h1>
+            <p class="P1">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+            <a class="" style="color: White;" href="{% url 'user_signin' %}"><button type="button" class="btn btn-light" style="background-color: #C7C7C7; border-radius: 30px; padding-left: 15px; padding-right: 15px;"><strong>Get Started</strong></button></a>
+        </div>
+        <div class="col-7">
+            <img src="{% static 'images/www.usnews.jpg' %}" class="img-fluid" style="width:95%; margin-top: 30px;" alt="image"/>
+        </div>
+    </div>
+
+    </br></br><br><hr></br></br></br>
+
+    
+    <div class="" style="margin-left: 175px">
+        {% for brand in brands %}
+            <div class="form-check form-check-inline">
+                {% comment %} <input class="form-check-input" type="radio" name="brands" id="{{brand.id}}"> {% endcomment %}
+                <label class="form-check-label" for="{{brand.id}}">
+                    <a href="{% url 'brand_wise_car' brand.slug%}" class="btn btn-secondary" style: "text-decoration: none;">{{brand.brandName}}</a>
+                </label>
+            </div>
+        {% endfor %}
+    </div>
+    
+
+    <br><br><br>
+
+    <div class="container mt-n2">
+        <h4 class="" style="margin-left: 5px;">{{cars | length}} results found</h4>
+        </br>
+        <div class="row">
+            {% for car in cars %}
+                <div class="col-sm-3 md-4 mb-4">
+                    <div class="card mx-1">
+                        <div class="card-body">
+                            <img src="{{car.image.url}}" class="card-img-top" style="margin-bottom: 20px;" alt="...">
+
+                            <h5 class="card-title">{{ car.carName }}</h5>
+                            <p class="card-title">Price: {{ car.carPrice }}$</p>
+      
+                            <p>
+                                Brand:
+                                {% if car.brands %}
+                                    {{ car.brands.brandName }}
+                                {% else %}
+                                    No Brand
+                                {% endif %}
+                            </p>
+
+                            <a href="{% url 'view_details' car.id %}" class="text-decoration-none">View Details</a>
+
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+
+{% endblock %}
